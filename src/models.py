@@ -224,7 +224,7 @@ class DifferentiatorDecision(BaseModel):
     was_changed: bool = False # if False, origional = rewritten
     rationale: Optional[str] = None
 
-class DifferentiatorTailoring(BaseModel):
+class DifferentiatorsTailoring(BaseModel):
     decisions: list[DifferentiatorDecision] = Field(default_factory=list)
     overall_rationale: str
 
