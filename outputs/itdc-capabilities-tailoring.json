@@ -1,0 +1,11 @@
+{
+  "ordered_capability_areas": [
+    "Cloud Computing",
+    "Data & Analytics",
+    "IT & Engineering Services",
+    "Business Support Services",
+    "Management Consulting",
+    "Auxiliary Services"
+  ],
+  "rationale": "Cloud Computing ranks first because the EPA opportunity explicitly centers on AWS GovCloud migration, FedRAMP/FISMA Moderate authorization boundaries, and a cloud-native architecture for consolidated environmental monitoring data \u2014 a direct technical match to Cloud Migration & Change Management and Security, Operations & Management. Data & Analytics follows immediately given the opportunity's core requirements for enterprise data governance frameworks, advanced analytics for regulatory decision-making, and independent validation of migrated datasets, all of which map directly to its sub-services. IT & Engineering Services is ranked third due to the explicit DevSecOps pipeline establishment requirement aligning with Agile & DevSecOps Adoption/Support and the need for infrastructure architecture in a cloud-native environment. Business Support Services rises above Management Consulting because it contains Independent Verification and Validation and Systems Documentation & Training, both explicitly called out in the EPA scope, whereas Management Consulting's value is more advisory and strategic in nature relative to the hands-on technical delivery emphasis of this effort."
+}
