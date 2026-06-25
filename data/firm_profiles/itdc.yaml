@@ -1,0 +1,253 @@
+# IT Data Consulting, LLC (ITDC) — Firm Profile
+# Source: public capability statement PDF
+# Format version: 2  (migrated from v1: certs.icon_based -> certs.primary,
+#                     list_based now structured, naics restructured,
+#                     executive_summary fields renamed/all optional,
+#                     clients_served gained intro_text/validation_text)
+
+company_identity:
+  legal_name: "IT Data Consulting, LLC"
+  display_name: "ITDC"
+  tagline: "Integrity | Innovation | Excellence"
+  founded: 2010
+  headquarters:
+    street: "12020 Sunrise Valley Drive, Suite 100"
+    city: "Reston"
+    state: "VA"
+    zip: "20191"
+  general_email: "info@it-dc.com"
+  general_phone: "(571) 303-1803"
+  firm_type: "SBA Certified 8(a) Management Consulting firm"
+
+executive_summary:
+  who_they_are: "an SBA Certified 8(a) Management Consulting firm"
+  mission_commitment: "dedicated to the success and sustainability of our customers and their missions"
+  positioning_statement: "Since 2010, we have been providing cost-effective, scalable, and task-specific enterprise business and technology solutions"
+  value_proposition: "Our combination of broad technical expertise, understanding of various industry domains, cutting-edge technology solution delivery experience, and lean business practices, ensure that we deliver best value solutions to our customers"
+  voice_passion: "ITDC has a passion for creating lasting solutions, based on industry best practices, proven engineering methods, and effective technical approaches, that deliver a high return on investment and quality services"
+  closing_line: "We value our relationships with our customers and partners, and always strive to innovate and provide excellent services that exceed expectations"
+
+core_capabilities:
+  - area: "Data & Analytics"
+    services:
+      - "Advanced Data Analytics"
+      - "Enterprise Data Architecture and Governance"
+      - "Relational Database Design & Development"
+  - area: "IT & Engineering Services"
+    services:
+      - "Agile & DevSecOps Adoption/Support"
+      - "Infrastructure & Enterprise Architecture"
+      - "Custom Software Design & Development"
+      - "Commercial Software & Systems Integration"
+  - area: "Cloud Computing"
+    services:
+      - "Cloud Readiness & Tools Assessment"
+      - "Cloud Migration & Change Management"
+      - "SaaS/IaaS/PaaS Implementation"
+      - "Security, Operations & Management"
+  - area: "Management Consulting"
+    services:
+      - "Program & Project Portfolio Management"
+      - "IT Strategy and Roadmap Design"
+      - "Regulatory & Compliance Support"
+      - "Advisory & Consulting Services"
+  - area: "Business Support Services"
+    services:
+      - "Business Transformation & (Re)Engineering"
+      - "Business & Requirements Analysis"
+      - "Systems Documentation & Training"
+      - "Independent Verification and Validation"
+  - area: "Auxiliary Services"
+    services:
+      - "Facilities Management"
+      - "Administrative Support"
+      - "Supply Chain & Logistics"
+      - "Staff Augmentation"
+
+differentiators:
+  - "Cost-effective innovative solutions to satisfy complex requirements"
+  - "Solutions delivery teams experienced in various technologies and PM frameworks"
+  - "Committed to delivering excellent services and best value outcomes"
+  - "Verifiable track record of exceeding customer expectations"
+  - "96% D&B Rating; ranked #840 on the 2021 Inc5000 Fastest Growing Companies in the U.S."
+  - "Highly educated, industry certified SMEs on the leadership team and staff"
+
+certifications:
+  primary:
+    - name: "SBA 8(a) Certified"
+      expires: "2026-04"
+    - name: "Maryland DOT MBE/DBE Certified"
+      expires: null
+    - name: "GSA Contract Holder"
+      expires: null
+  list_based:
+    - name: "PMP"
+    - name: "Agile"
+    - name: "Scrum"
+    - name: "AWS"
+    - name: "CISSP"
+    - name: "Oracle"
+    - name: "Microsoft"
+    - name: "Big Data"
+
+naics_codes:
+  show_description: true
+  codes:
+    - code: "541512"
+      description: "Computer Systems Design Services"
+    - code: "541511"
+      description: "Custom Computer Programming Services"
+    - code: "518210"
+      description: "Data Processing, Hosting, and Related Services"
+    - code: "541513"
+      description: "Computer Facilities Management Services"
+    - code: "541611"
+      description: "Administrative Management and General Management Consulting Services"
+    - code: "541618"
+      description: "Other Management Consulting Services"
+    - code: "541990"
+      description: "All Other Professional, Scientific and Technical Services"
+    - code: "541519"
+      description: "Other Computer Related Services"
+    - code: "519190"
+      description: "All Other Information Services"
+    - code: "236xxx"
+      description: "Construction of Buildings (facilities support family)"
+      wildcard: true
+    - code: "238xxx"
+      description: "Specialty Trade Contractors (facilities support family)"
+      wildcard: true
+    - code: "561xxx"
+      description: "Administrative and Support Services (facilities support family)"
+      wildcard: true
+
+identifiers:
+  duns: "070990867"
+  cage: "7J6G9"
+  uei: null  # not listed in source PDF
+  dnb_open_ratings: "96%"
+
+contacts:
+  - name: "Benny Asnake"
+    title: "President & CEO"
+    phone: "(202) 999-9184"
+  - name: "John Horton"
+    title: "VP – Federal Solutions"
+    phone: "(240) 505-7144"
+
+clients_served:
+  partial_list: true
+  government:
+    - "U.S. Agency for International Development"
+    - "Defense Health Agency"
+    - "Environmental Protection Agency"
+    - "Housing and Urban Development"
+    - "Internal Revenue Service"
+    - "National Institutes of Health"
+  commercial:
+    - "College Board"
+    - "Fiserv"
+    - "Genpact"
+    - "Graydon"
+    - "MedAssets Inc."
+    - "MPG Logistics"
+    - "MUFG Union Bank"
+    - "Sterling National Bank"
+    - "American College of Radiology"
+
+partners:
+  - name: "DTSI"
+    relationship: "SBA Approved Mentor"
+  - name: "SAS"
+    relationship: "Silver Partner"
+  - name: "Amazon Web Services"
+    relationship: "AWS Partner Network"
+  - name: "Collibra"
+  - name: "IBM"
+    relationship: "Registered Business Partner"
+
+contract_vehicles:
+  - name: "SBA 8(a) Sole-Source"
+    note: "up to $4.5M"
+  - name: "GSA MAS Schedule"
+    identifier: "GS-35F-645GA"
+  - name: "GSA 8(a) STARS III"
+    identifier: "47QTCB21D0358"
+
+technical_expertise:
+  processes:
+    - "JIRA"
+    - "Agile"
+    - "Scrum"
+    - "Confluence"
+    - "Waterfall"
+    - "PMP"
+  devops_and_delivery:
+    - "DevOps"
+    - "CI/CD"
+    - "Git/Bitbucket"
+    - "Jenkins"
+    - "Docker"
+  cloud_and_development:
+    - "AWS"
+    - "Azure"
+    - ".NET/C#/MVC"
+    - "Java"
+    - "C/C++"
+    - "HTML5"
+    - "PHP"
+    - "JavaScript"
+    - "Drupal"
+    - "WordPress"
+    - "SharePoint"
+    - "Xamarin"
+    - "Swift"
+    - "Xcode"
+    - "Digital Ocean"
+    - "Heroku"
+    - "EC2"
+    - "S3"
+    - "Lambda"
+    - "SNS"
+    - "SQS"
+    - "ELB"
+    - "Kinesis"
+    - "ECS"
+  data_platforms:
+    - "Oracle"
+    - "SQL Server"
+    - "DB2"
+    - "MySQL"
+    - "Redis"
+    - "PostgreSQL"
+    - "HBase"
+    - "Cassandra"
+    - "MongoDB"
+    - "Hadoop"
+    - "Spark"
+    - "Flink"
+    - "Yarn"
+    - "Mesos"
+    - "Kafka"
+    - "Solr"
+    - "Elastic Search"
+    - "SAS"
+    - "DataFlux"
+    - "Informatica"
+    - "Talend"
+    - "R"
+    - "SPSS"
+    - "Qlik"
+    - "Tableau"
+    - "Ab Initio"
+    - "Salesforce"
+    - "Pentaho"
+    - "ODI"
+    - "SSIS"
+    - "Python"
+    - "Perl"
+    - "Matlab"
+
+brand_assets:
+  primary_color: "#1F3864"
+  accent_color: "#ED7D31"

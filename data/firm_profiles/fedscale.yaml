@@ -1,0 +1,153 @@
+# FedScale — Firm Profile
+# Source: public capability statement PDF
+# Format version: 2
+
+company_identity:
+  legal_name: "FedScale, Incorporated"
+  display_name: "FedScale"
+  tagline: "Innovative Enterprise Solutions"
+  founded: 2013  # not on the cap statement; pulled from web search
+  headquarters:
+    street: "5559 Main Street"
+    city: "Mount Jackson"
+    state: "VA"
+    zip: "22842"
+  general_email: "solutions@fedscale.com"
+  general_phone: "866-435-1204"
+  fax: "703-542-0112"
+  website: "www.fedscale.com"
+  firm_type: "8(a) and HUBZone SBA certified Economically Disadvantaged Women Owned (EDWOSB) small business"
+
+executive_summary:
+  who_they_are: "an 8(a) and HUBZone SBA certified Economically Disadvantaged Women Owned (EDWOSB) small business"
+  positioning_statement: "FedScale provides innovative integration services and solutions for a full range of IT products and functional areas"
+  value_proposition: "As a full spectrum, IT solutions company, FedScale delivers unparalleled Cloud Architecture, Network Engineering, Data Center Transformation, Application Migration, Cyber Security, Operations and Maintenance (O&M), and Enterprise Records Management Services."
+
+core_capabilities:
+  - area: "Cloud Architecture and Migration Solutions"
+  - area: "Cyber Security & Monitoring Services"
+  - area: "DevOps & Cloud-Based App Development"
+  - area: "Records Digitization & Information Management"
+  - area: "Data Center Modernization & Transformation"
+  - area: "Data Modernization"
+  - area: "Data Engineering, Analytics, AI & ML Modeling"
+  - area: "Project Management Support"
+  - area: "IT Infrastructure Design & Implementation"
+  - area: "IT Support Services"
+
+certifications:
+  primary:
+    - name: "SBA 8(a) Certified"
+    - name: "HUBZone"
+    - name: "EDWOSB"  # no icon in source, but same set-aside category as the above two
+  list_based:
+    - name: "Capability Maturity Model Integrated (CMMI)"
+      supplement:
+        - "CMMI SVC/3 Appraised"
+    - name: "Cybersecurity Maturity Model Certification (CMMC) Level 1"
+    - name: "International Organization for Standardization (ISO)"
+      supplement:
+        - "ISO 9001:2015"
+        - "ISO/IEC 20000-1:2018"
+        - "ISO/IEC 270001:2013"
+
+naics_codes:
+  show_description: false  # source statement shows codes only
+  codes:
+    - code: "518210"
+      description: "Data Processing, Hosting, and Related Services"
+    - code: "541511"
+      description: "Custom Computer Programming Services"
+    - code: "541512"
+      description: "Computer Systems Design Services"
+    - code: "541513"
+      description: "Computer Facilities Management Services"
+    - code: "541519"
+      description: "Other Computer Related Services"
+    - code: "541611"
+      description: "Administrative Management and General Management Consulting Services"
+    - code: "541618"
+      description: "Other Management Consulting Services"
+    - code: "541612"
+      description: "Human Resources Consulting Services"
+    - code: "541720"
+      description: "Research and Development in the Social Sciences and Humanities"
+    - code: "541990"
+      description: "All Other Professional, Scientific and Technical Services"
+    - code: "561210"
+      description: "Facilities Support Services"
+    - code: "611420"
+      description: "Computer Training"
+    - code: "611430"
+      description: "Professional and Management Development Training"
+    - code: "238210"
+      description: "Electrical Contractors and Other Wiring Installation Contractors"
+    - code: "334111"
+      description: "Electronic Computer Manufacturing"
+    - code: "334310"
+      description: "Audio and Video Equipment Manufacturing"
+
+identifiers:
+  duns: "079151871"
+  cage: "70HX5"
+  uei: "UAN1JULSXMT6"
+
+contacts:
+  # not on the cap statement; pulled from website
+  - name: "Teena Sirohi"
+    title: "CEO"
+    phone: "866-435-1204"
+    email: "solutions@fedscale.com"
+
+clients_served:
+  partial_list: false
+  intro_text: "The FedScale team has proven experience as a prime contractor conducting large hardware and software procurements, staffing and managing highly skilled IT professionals, and delivering project management services driving innovative IT solutions with significant cost savings to our clients"
+  validation_text: "FedScale has earned a strong client satisfaction and past performance rating from all government organizations"
+  government:
+    - "U.S. Department of Labor"
+    - "U.S. Department of Agriculture"
+    - "U.S. Food and Drug Administration"
+    - "U.S. Department of Energy"
+    - "U.S. Department of Commerce"
+    - "U.S. Department of Justice"
+    - "U.S. Department of the Army"
+    - "U.S. Department of the Air Force"
+    - "U.S. Department of the Treasury"
+    - "U.S. Department of Homeland Security"
+    - "U.S. Department of Transportation"
+    - "Federal Aviation Administration"
+    - "U.S. Department of the Interior"
+    - "National Aeronautics and Space Administration"
+    - "U.S. Office of Government Ethics"
+    - "U.S. Transportation Command"
+
+partners:
+  - name: "Microsoft"
+  - name: "Amazon Web Services"
+  - name: "Esri"
+    relationship: "Bronze Partner"
+  - name: "FEITH"
+  - name: "Hewlett Packard"
+    relationship: "Silver Partner"
+  - name: "Cisco"
+    relationship: "Premier Certified Partner"
+  - name: "Dell"
+
+contract_vehicles:
+  - name: "GSA Schedule 70"
+  - name: "GSA Contract Holder"
+    identifier: "GS-35F-449GA"
+  - name: "FAA eFAST"
+    note: "Electronic Federal Aviation Administration Accelerated and Simplified Tasks"
+  - name: "USDA Rural Development Information Management Environment Support (RDIMES)"
+    note: "USDA Rural Development initiative"
+  - name: "Bureau of Reclamation"
+    note: "FedRAMP-accredited as-a-Service solution"
+  - name: "CIO-SP3"
+    note: "Subcontractor under EKAgra Partner LLC"
+  - name: "NASA SEWP V"
+    note: "Group B SDVOSB; Subcontractor under Alverez"
+
+brand_assets:
+  primary_color: "#030977"
+  accent_color: "#C1262B"
