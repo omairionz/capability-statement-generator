@@ -10,7 +10,7 @@ from pathlib import Path
 #from langchain_openai import ChatOpenAI # OpenRouter capability
 from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import HumanMessage, SystemMessage
-from src.models import FirmProfile, PastPerformanceLibrary, PastPerformanceTailoring, CapabilityTailoring
+from src.models import FirmProfile, PastPerformanceLibrary, PastPerformanceTailoring, CapabilityTailoring, DifferentiatorsTailoring
 
 # OPEN ROUTER
 # llm = ChatOpenAI(
@@ -51,7 +51,7 @@ def _call_tailoring_prompt(system_prompt_path: Path, user_content: str, pydantic
 def tailor(firm: FirmProfile, library: PastPerformanceLibrary, opportunity_text: str):
     """Master tailoring method."""
 
-    # ====== 1. Past Performance ===========================================
+    # ====== 1. Past Performance (pp) ===========================================
     pp_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nPAST PERFORMANCE LIBRARY:\n\n{library.model_dump_json(indent=2)}"
     # Validate JSON shape with Pydantic Model
     pp_tailoring = _call_tailoring_prompt(PAST_PERFORMANCE_PROMPT, pp_user_content, PastPerformanceTailoring)
@@ -60,17 +60,20 @@ def tailor(firm: FirmProfile, library: PastPerformanceLibrary, opportunity_text:
     # Applied ordering
     pp_final = _apply_past_performance_ordering(pp_tailoring, library)
 
-    # ====== 2. Core Capabilities ==========================================
+    # ====== 2. Core Capabilities (cc) ==========================================
     cc_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nCAPABILITIES:\n\n{json.dumps([c.model_dump() for c in firm.core_capabilities], indent=2)}"
     cc_tailoring = _call_tailoring_prompt(CAPABILITIES_PROMPT, cc_user_content, CapabilityTailoring)
     _validate_capabilities_tailoring_invariants(cc_tailoring, firm)
     cc_final = _apply_capabilities_ordering(cc_tailoring, firm)
 
-    # ====== 3. Differentiators ==========================================
-
+    # ====== 3. Differentiators (d) ==========================================
+    d_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nDIFFERENTIATORS:\n\n{json.dumps([d.model_dump() for d in firm.differentiators], indent=2)}"
+    d_tailoring = _call_tailoring_prompt(DIFFERENTIATORS_PROMPT, d_user_content, DifferentiatorsTailoring)
+    _validate_differentiators_tailoring_invariants(d_tailoring, firm)
+    d_final = _apply_differentiators_ordering(d_tailoring, firm)
 
     # ++++++++ RETURN STATEMENT ++++++++++
-    return pp_final, pp_tailoring, cc_final, cc_tailoring
+    return pp_final, pp_tailoring, cc_final, cc_tailoring, d_final, d_tailoring
 
 #=====================================================================================================
 #========================================== HELPER METHODS ===========================================
@@ -171,5 +174,12 @@ def _apply_capabilities_ordering(tailoring: CapabilityTailoring, firm: FirmProfi
         for capability in firm.core_capabilities:
             if tailored_entry == capability.area:
                 reordered.append(capability)
-
     return firm.model_copy(update={"core_capabilities": reordered}, deep=True)
+
+# _____ 3. Differentiators ____________________________________________
+
+def _validate_differentiators_tailoring_invariants(tailoring: DifferentiatorsTailoring, firm: FirmProfile):
+    print("TODO")
+
+def _apply_differentiators_ordering(tailoring: DifferentiatorsTailoring, firm: FirmProfile):
+    print("TODO")
