@@ -10,7 +10,7 @@ from pathlib import Path
 #from langchain_openai import ChatOpenAI # OpenRouter capability
 from langchain_anthropic import ChatAnthropic
 from langchain_core.messages import HumanMessage, SystemMessage
-from src.models import FirmProfile, PastPerformanceLibrary, PastPerformanceTailoring, CapabilityTailoring, DifferentiatorsTailoring
+from src.models import FirmProfile, PastPerformanceLibrary, PastPerformanceTailoring, CapabilityTailoring, DifferentiatorsTailoring, PositioningTailoring
 
 # OPEN ROUTER
 # llm = ChatOpenAI(
@@ -28,7 +28,7 @@ DIFFERENTIATORS_PROMPT = Path("prompts/tailoring_prompts/tailor_differentiators.
 POSITIONING_PROMPT = Path("prompts/tailoring_prompts/tailor_positioning.md") # value_proposition of Executive Summary
 
 def _call_tailoring_prompt(system_prompt_path: Path, user_content: str, pydantic_model):
-    """Runs LLM calls and JSON parsing."""
+    """Runs LLM calls and JSON parsing. Returns Tailoring Objects."""
     system_prompt = system_prompt_path.read_text(encoding="utf-8")
     response = llm.invoke([
         SystemMessage(content=system_prompt),
@@ -58,22 +58,25 @@ def tailor(firm: FirmProfile, library: PastPerformanceLibrary, opportunity_text:
     # Validate Tailoring Library with actual Past Performance Library and against invariants
     _validate_pp_tailoring_invariants(pp_tailoring, library)
     # Applied ordering
-    pp_final = _apply_past_performance_ordering(pp_tailoring, library)
+    pp_library_final = _apply_past_performance_ordering(pp_tailoring, library)
 
     # ====== 2. Core Capabilities (cc) ==========================================
     cc_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nCAPABILITIES:\n\n{json.dumps([c.model_dump() for c in firm.core_capabilities], indent=2)}"
     cc_tailoring = _call_tailoring_prompt(CAPABILITIES_PROMPT, cc_user_content, CapabilityTailoring)
     _validate_capabilities_tailoring_invariants(cc_tailoring, firm)
-    cc_final = _apply_capabilities_ordering(cc_tailoring, firm)
+    tailored_firm_profile = _apply_capabilities_ordering(cc_tailoring, firm)
 
-    # ====== 3. Differentiators (d) ==========================================
-    d_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nDIFFERENTIATORS:\n\n{json.dumps([d.model_dump() for d in firm.differentiators], indent=2)}"
+    # ====== 3. Differentiators (d) =============================================
+    d_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nDIFFERENTIATORS:\n\n{json.dumps([d.model_dump_json() for d in firm.differentiators], indent=2)}"
     d_tailoring = _call_tailoring_prompt(DIFFERENTIATORS_PROMPT, d_user_content, DifferentiatorsTailoring)
-    _validate_differentiators_tailoring_invariants(d_tailoring, firm)
-    d_final = _apply_differentiators_ordering(d_tailoring, firm)
+    _validate_differentiators_tailoring_invariants(d_tailoring, tailored_firm_profile)
+    tailored_firm_profile = _apply_differentiators_rewording(d_tailoring, tailored_firm_profile)
+
+    # ====== 3. Positioning (pos) ===============================================
+    pos_tailoring = "TODO"
 
     # ++++++++ RETURN STATEMENT ++++++++++
-    return pp_final, pp_tailoring, cc_final, cc_tailoring, d_final, d_tailoring
+    return tailored_firm_profile, pp_library_final, pp_tailoring, cc_tailoring, d_tailoring, pos_tailoring
 
 #=====================================================================================================
 #========================================== HELPER METHODS ===========================================
@@ -151,7 +154,7 @@ def _validate_capabilities_tailoring_invariants(tailoring: CapabilityTailoring, 
     if invented_ids:
         raise ValueError(
             f"Tailoring returned capability areas not present in the library: {sorted(invented_ids)}. "
-            f"Original apability entries contains: {sorted(capability_entries)}"
+            f"Original capability entries contains: {sorted(capability_entries)}"
         )
     
     # Invariant 2. Each ordered_capability_areas must appear exactly once.
@@ -168,7 +171,7 @@ def _validate_capabilities_tailoring_invariants(tailoring: CapabilityTailoring, 
         )
     
 def _apply_capabilities_ordering(tailoring: CapabilityTailoring, firm: FirmProfile):
-    """Reorders core capabilities."""
+    """Reorders core capabilities. Returns FirmProfile."""
     reordered = []
     for tailored_entry in tailoring.ordered_capability_areas:
         for capability in firm.core_capabilities:
@@ -179,7 +182,49 @@ def _apply_capabilities_ordering(tailoring: CapabilityTailoring, firm: FirmProfi
 # _____ 3. Differentiators ____________________________________________
 
 def _validate_differentiators_tailoring_invariants(tailoring: DifferentiatorsTailoring, firm: FirmProfile):
-    print("TODO")
+    differentiators = set(firm.differentiators) if firm.differentiators else set()
+    original_differentiators = {entry.original for entry in tailoring.decisions}
 
-def _apply_differentiators_ordering(tailoring: DifferentiatorsTailoring, firm: FirmProfile):
-    print("TODO")
+    # Invariant 1: every differentiator must match a tailoring.original
+    missing = differentiators - original_differentiators
+    if missing:
+        raise ValueError(
+            f"Decisions are missing entries for these differentiators: {sorted(missing)}"
+        )
+    
+    # Invariant 2: Check count
+    if len(firm.differentiators) != len(tailoring.decisions):
+        raise ValueError(
+            f"Expected {len(firm.differentiators)} objects. Got {len(tailoring.decisions)} instead."
+        )    
+    
+    # Invariant 3: At most 2 differentiators were rewritten
+    count = 0
+    for entry in tailoring.decisions:
+        if entry.was_changed:
+            count += 1
+    if count > 2:
+        raise ValueError(
+            f"Expected 2 changes. Instead got {count} changes."
+        )
+    
+    # Invariant 4: Check for duplicates
+    if len(original_differentiators) != len(set(original_differentiators)):
+        raise ValueError(
+            f"Decisions contain duplicate originals: {original_differentiators}"
+        )
+
+    # Invariant 5: was_changed=False means original == rewritten
+    for decision in tailoring.decisions:
+        if not decision.was_changed and decision.original != decision.rewritten:
+            raise ValueError(
+                f"Decision marked was_changed=False but text differs.\n"
+                f"  original:  '{decision.original}'\n"
+                f"  rewritten: '{decision.rewritten}'"
+            )
+
+def _apply_differentiators_rewording(tailoring: DifferentiatorsTailoring, firm: FirmProfile):
+    """Rewords differentiators. Returns FirmProfile."""
+    reordered = []
+    #TODO: Apply differentiators rewording
+    return firm.model_copy(update={"differentiators": reordered}, deep=True)
