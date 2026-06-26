@@ -32,7 +32,7 @@ Render NAICS Codes based on the show_description flag inside the naics_codes obj
 
 Render Clients Served:
 - If intro_text is provided, render it as italicized prose before the client lists.
-- List clients under '##### U.S. Government' and '##### Commercial' subheaders. Only render a subheader if its list has clients.
+- List clients under '##### U.S. Government' and '##### Commercial' sub-headers. Only render a subheader if its list has clients.
 - For partial lists (partial_list: true), append '(partial list)' to the section header. For complete lists, omit the parenthetical.
 - If validation_text is provided, render it as italicized prose after the client lists.
 
