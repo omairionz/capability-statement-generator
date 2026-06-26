@@ -134,11 +134,17 @@ def main() -> None:
         for decision in d_tailored_model.decisions:
             tag = "⭐" if decision.was_changed else ""
             print(f"{tag} {decision.rewritten}")
+        
+        output_path_firm_differentiators = Path(f"outputs/{FIRM_NAME}-firm-differentiators.json")
+        output_path_firm_differentiators.parent.mkdir(parents=True, exist_ok=True)
+        output_path_firm_differentiators.write_text(json.dumps([json.dumps(firm_profile.differentiators, indent=2)], indent=2), encoding="utf-8")
+
+        output_path_d_tailoring = Path(f"outputs/{FIRM_NAME}-differentiators-tailoring.json")
+        output_path_d_tailoring.parent.mkdir(parents=True, exist_ok=True)
+        output_path_d_tailoring.write_text(json.dumps(d_tailored_model.model_dump(), indent=2), encoding="utf-8")
+
     else:
         print("No differentiators to tailor for this firm.")
-
-
-
 
 if __name__ == "__main__":
     main()
