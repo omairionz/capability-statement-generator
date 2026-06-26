@@ -1,0 +1,41 @@
+{
+  "decisions": [
+    {
+      "original": "Cost-effective innovative solutions to satisfy complex requirements",
+      "rewritten": "Cost-effective software-defined networking and zero-trust cybersecurity solutions to satisfy complex DoD tactical communications modernization requirements",
+      "was_changed": true,
+      "rationale": "The original was entirely generic with no defense or technical specificity. The rewrite incorporates the opportunity's core technical themes\u2014software-defined networking and zero-trust architecture\u2014while anchoring the claim to DoD tactical communications modernization, which is the precise focus of PEO C3T's initiative. This signals immediate relevance to the evaluating program office without inventing any factual claims."
+    },
+    {
+      "original": "Solutions delivery teams experienced in various technologies and PM frameworks",
+      "rewritten": "Solutions delivery teams experienced in RMF authorization, DevSecOps pipelines, and Army/Joint Technical Architecture standards including DISR-registered standards and SDR-compliant platforms",
+      "was_changed": true,
+      "rationale": "The original was broad and keyword-generic, offering no signal of defense communications competency. The rewrite surfaces the specific technical and regulatory keywords the Army explicitly called out\u2014RMF, DevSecOps, DISR standards, and SDR platforms\u2014which are central evaluation criteria in the sources sought. This directly addresses the Army's stated interest areas without overstating any factual accomplishment."
+    },
+    {
+      "original": "Committed to delivering excellent services and best value outcomes",
+      "rewritten": "Committed to delivering excellent services and best value outcomes",
+      "was_changed": false,
+      "rationale": null
+    },
+    {
+      "original": "Verifiable track record of exceeding customer expectations",
+      "rewritten": "Verifiable track record of exceeding customer expectations",
+      "was_changed": false,
+      "rationale": null
+    },
+    {
+      "original": "96% D&B Rating; ranked #840 on the 2021 Inc5000 Fastest Growing Companies in the U.S.",
+      "rewritten": "96% D&B Rating; ranked #840 on the 2021 Inc5000 Fastest Growing Companies in the U.S.",
+      "was_changed": false,
+      "rationale": null
+    },
+    {
+      "original": "Highly educated, industry certified SMEs on the leadership team and staff",
+      "rewritten": "Highly educated, industry certified SMEs on the leadership team and staff",
+      "was_changed": false,
+      "rationale": null
+    }
+  ],
+  "overall_rationale": "Two of the most generic, keyword-free differentiators were reworded to directly mirror the Army PEO C3T opportunity's stated technical priorities. The first differentiator was rewritten to reference software-defined networking and zero-trust cybersecurity\u2014the architectural pillars of this modernization effort\u2014replacing a vague claim of innovation with language the program office will immediately recognize. The second differentiator was rewritten to call out RMF authorization, DevSecOps, DISR standards, and SDR platforms, all of which appear verbatim in the Army's capability criteria, replacing a generic reference to 'various technologies and PM frameworks' that offered no competitive signal. The remaining four differentiators were left unchanged: the D&B rating and Inc5000 ranking are verifiable factual accomplishments that must be preserved verbatim, while the quality-of-service and SME claims, though qualitative, were not selected for reword because the two-differentiator limit had been reached and these carry relatively more inherent weight than the two that were changed."
+}
