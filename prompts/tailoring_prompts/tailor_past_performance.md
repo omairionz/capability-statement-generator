@@ -5,7 +5,7 @@ The opportunity follows below as plain text. The past performance library follow
 Each past performance entry has a stable string ID in the id field (e.g., 'pp-001'). Use these IDs verbatim in your output.
 
 Only return JSON format. No commentary, preamble, markdown fences or explanation outside of JSON.
-JSON must parse cleanly with json.loads(). Proper quoting, no trailing commas, no commentary. Only the raw the JSON object.
+JSON must parse cleanly with json.loads(). Proper quoting, no trailing commas, no commentary. Only the raw JSON object.
 The very first character of your response must be { and the very last must be }."
 
 Return the following variables inside the JSON object:
