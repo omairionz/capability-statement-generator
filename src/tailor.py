@@ -49,7 +49,9 @@ def _call_tailoring_prompt(system_prompt_path: Path, user_content: str, pydantic
     return pydantic_model.model_validate(parsed_dict)
 
 def tailor(firm: FirmProfile, library: PastPerformanceLibrary, opportunity_text: str):
-    """Master tailoring method."""
+    """Master tailoring method. Returns FirmProfile, PastPerformanceLibrary, 
+    PP Tailoring, Capabilities Tailoring, Differentiators Tailoring, 
+    & Positioning Tailoring Objects."""
 
     # ====== 1. Past Performance (pp) ===========================================
     pp_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nPAST PERFORMANCE LIBRARY:\n\n{library.model_dump_json(indent=2)}"
@@ -67,11 +69,14 @@ def tailor(firm: FirmProfile, library: PastPerformanceLibrary, opportunity_text:
     tailored_firm_profile = _apply_capabilities_ordering(cc_tailoring, firm)
 
     # ====== 3. Differentiators (d) =============================================
-    d_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nDIFFERENTIATORS:\n\n{json.dumps([d.model_dump_json() for d in firm.differentiators], indent=2)}"
-    d_tailoring = _call_tailoring_prompt(DIFFERENTIATORS_PROMPT, d_user_content, DifferentiatorsTailoring)
-    _validate_differentiators_tailoring_invariants(d_tailoring, tailored_firm_profile)
-    tailored_firm_profile = _apply_differentiators_rewording(d_tailoring, tailored_firm_profile)
-
+    if tailored_firm_profile.differentiators:
+        d_user_content = (f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nDIFFERENTIATORS:\n\n{json.dumps(tailored_firm_profile.differentiators, indent=2)}")    
+        d_tailoring = _call_tailoring_prompt(DIFFERENTIATORS_PROMPT, d_user_content, DifferentiatorsTailoring)
+        _validate_differentiators_tailoring_invariants(d_tailoring, tailored_firm_profile)
+        tailored_firm_profile = _apply_differentiators_rewording(d_tailoring, tailored_firm_profile)
+    else:
+        d_tailoring = None
+        
     # ====== 3. Positioning (pos) ===============================================
     pos_tailoring = "TODO"
 
@@ -209,9 +214,10 @@ def _validate_differentiators_tailoring_invariants(tailoring: DifferentiatorsTai
         )
     
     # Invariant 4: Check for duplicates
-    if len(original_differentiators) != len(set(original_differentiators)):
+    original_list = [entry.original for entry in tailoring.decisions]
+    if len(original_list) != len(set(original_list)):
         raise ValueError(
-            f"Decisions contain duplicate originals: {original_differentiators}"
+            f"Decisions contain duplicate originals: {original_list}"
         )
 
     # Invariant 5: was_changed=False means original == rewritten
@@ -225,6 +231,7 @@ def _validate_differentiators_tailoring_invariants(tailoring: DifferentiatorsTai
 
 def _apply_differentiators_rewording(tailoring: DifferentiatorsTailoring, firm: FirmProfile):
     """Rewords differentiators. Returns FirmProfile."""
-    reordered = []
-    #TODO: Apply differentiators rewording
-    return firm.model_copy(update={"differentiators": reordered}, deep=True)
+    reworded = []
+    for tailored_entry in tailoring.decisions:
+        reworded.append(tailored_entry.rewritten)
+    return firm.model_copy(update={"differentiators": reworded}, deep=True)
