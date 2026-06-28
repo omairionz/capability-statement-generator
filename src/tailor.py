@@ -70,15 +70,18 @@ def tailor(firm: FirmProfile, library: PastPerformanceLibrary, opportunity_text:
 
     # ====== 3. Differentiators (d) =============================================
     if tailored_firm_profile.differentiators:
-        d_user_content = (f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nDIFFERENTIATORS:\n\n{json.dumps(tailored_firm_profile.differentiators, indent=2)}")    
+        d_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nDIFFERENTIATORS:\n\n{json.dumps(tailored_firm_profile.differentiators, indent=2)}"   
         d_tailoring = _call_tailoring_prompt(DIFFERENTIATORS_PROMPT, d_user_content, DifferentiatorsTailoring)
         _validate_differentiators_tailoring_invariants(d_tailoring, tailored_firm_profile)
         tailored_firm_profile = _apply_differentiators_rewording(d_tailoring, tailored_firm_profile)
     else:
         d_tailoring = None
         
-    # ====== 3. Positioning (pos) ===============================================
-    pos_tailoring = "TODO"
+    # ====== 4. Positioning (pos) ===============================================
+    pos_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nPOSITIONING:\n\n{json.dumps(tailored_firm_profile.executive_summary.value_proposition, indent=2)}"
+    pos_tailoring = _call_tailoring_prompt(POSITIONING_PROMPT, pos_user_content, PositioningTailoring)
+    _validate_positioning_tailoring_invariants(pos_tailoring, tailored_firm_profile)
+    tailored_firm_profile = _apply_positioning_rewording(pos_tailoring, tailored_firm_profile)
 
     # ++++++++ RETURN STATEMENT ++++++++++
     return tailored_firm_profile, pp_library_final, pp_tailoring, cc_tailoring, d_tailoring, pos_tailoring
@@ -235,3 +238,11 @@ def _apply_differentiators_rewording(tailoring: DifferentiatorsTailoring, firm: 
     for tailored_entry in tailoring.decisions:
         reworded.append(tailored_entry.rewritten)
     return firm.model_copy(update={"differentiators": reworded}, deep=True)
+
+# _____ 4. Positioning ____________________________________________
+
+def _validate_positioning_tailoring_invariants(tailoring: PositioningTailoring, firm: FirmProfile):
+    print("TODO")
+
+def _apply_positioning_rewording(tailoring: PositioningTailoring, firm: FirmProfile):
+    print("TODO")
