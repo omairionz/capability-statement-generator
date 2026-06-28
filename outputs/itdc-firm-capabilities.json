@@ -1,20 +1,28 @@
 [
   {
-    "area": "IT & Engineering Services",
-    "services": [
-      "Agile & DevSecOps Adoption/Support",
-      "Infrastructure & Enterprise Architecture",
-      "Custom Software Design & Development",
-      "Commercial Software & Systems Integration"
-    ]
-  },
-  {
     "area": "Cloud Computing",
     "services": [
       "Cloud Readiness & Tools Assessment",
       "Cloud Migration & Change Management",
       "SaaS/IaaS/PaaS Implementation",
       "Security, Operations & Management"
+    ]
+  },
+  {
+    "area": "Data & Analytics",
+    "services": [
+      "Advanced Data Analytics",
+      "Enterprise Data Architecture and Governance",
+      "Relational Database Design & Development"
+    ]
+  },
+  {
+    "area": "IT & Engineering Services",
+    "services": [
+      "Agile & DevSecOps Adoption/Support",
+      "Infrastructure & Enterprise Architecture",
+      "Custom Software Design & Development",
+      "Commercial Software & Systems Integration"
     ]
   },
   {
@@ -33,14 +41,6 @@
       "IT Strategy and Roadmap Design",
       "Regulatory & Compliance Support",
       "Advisory & Consulting Services"
-    ]
-  },
-  {
-    "area": "Data & Analytics",
-    "services": [
-      "Advanced Data Analytics",
-      "Enterprise Data Architecture and Governance",
-      "Relational Database Design & Development"
     ]
   },
   {

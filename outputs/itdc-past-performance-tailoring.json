@@ -1,12 +1,12 @@
 {
   "featured_ids": [
     "pp-003",
-    "pp-005"
+    "pp-001",
+    "pp-002"
   ],
   "remaining_ids": [
-    "pp-001",
-    "pp-002",
-    "pp-004"
+    "pp-004",
+    "pp-005"
   ],
-  "rationale": "pp-003 is the strongest match because it directly demonstrates DevSecOps pipeline implementation and AWS GovCloud migration experience, both of which are explicitly called out in the Army PEO C3T opportunity's scope for DevSecOps continuous delivery pipelines and IL4/IL5 cloud environment proficiency. pp-005 was selected as the second featured entry because it is the only other DoD-sector entry in the library, providing Defense Health Agency program management and IV&V support \u2014 the opportunity explicitly requests IV&V of migrated network configurations, and DoD familiarity (including compliance documentation and RMF-adjacent work) is a meaningful signal. No third entry was featured because pp-001, pp-002, and pp-004 are all federal civilian modernization efforts with no DoD nexus, no tactical communications relevance, no software-defined networking or spectrum management experience, and no RMF/cybersecurity alignment at the Secret/IL4-IL5 level required by this Army tactical network modernization effort. pp-001 was demoted because while it demonstrates cloud migration, its IRS tax analytics context shares no mission-domain or technical overlap with Army tactical communications infrastructure."
+  "rationale": "pp-003 is the strongest match by a wide margin: it is direct EPA past performance involving DevSecOps, CI/CD pipeline establishment, and migration from on-premise systems to AWS GovCloud \u2014 all core elements of this opportunity. pp-001 is featured second because it demonstrates federal civilian data analytics modernization with legacy-to-cloud migration at scale, closely mirroring the EPA opportunity's technical scope even though the agency differs. pp-002 is featured third for its enterprise data governance implementation aligned to federal data-sharing policies, directly addressing the EPA opportunity's requirement for governance frameworks and data quality standards. pp-005 was demoted over pp-002 because its IV&V and compliance work was performed in a DoD healthcare program management context with no data platform or cloud migration relevance, while pp-002 demonstrates direct data governance and platform design work within a federal scientific mission. pp-004 was demoted as its focus on case management application development and user training, without cloud, data analytics, or governance components, represents only superficial alignment to this opportunity."
 }

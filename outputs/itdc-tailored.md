@@ -1,13 +1,14 @@
 # ITDC Capability Statement
 
 ### Executive Summary
-ITDC is an SBA Certified 8(a) Management Consulting firm dedicated to the success and sustainability of our customers and their missions. Since 2010, we have been providing cost-effective, scalable, and task-specific enterprise business and technology solutions. Our combination of broad technical expertise, understanding of various industry domains, cutting-edge technology solution delivery experience, and lean business practices, ensure that we deliver best value solutions to our customers.
-
-ITDC has a passion for creating lasting solutions, based on industry best practices, proven engineering methods, and effective technical approaches, that deliver a high return on investment and quality services. We value our relationships with our customers and partners, and always strive to innovate and provide excellent services that exceed expectations.
-
----
+ITDC is an SBA Certified 8(a) Management Consulting firm delivering technology-driven solutions to the federal government and commercial sector. Our combination of deep AWS GovCloud migration expertise, federal civilian data modernization experience, enterprise data governance and DevSecOps delivery capabilities, and lean business practices ensure that we deliver best-value, FISMA Moderate-compliant solutions to EPA and its mission support objectives.
 
 ### Core Capabilities
+- **Cloud Computing**
+    - Cloud Readiness & Tools Assessment
+    - Cloud Migration & Change Management
+    - SaaS/IaaS/PaaS Implementation
+    - Security, Operations & Management
 - **Data & Analytics**
     - Advanced Data Analytics
     - Enterprise Data Architecture and Governance
@@ -17,38 +18,29 @@ ITDC has a passion for creating lasting solutions, based on industry best practi
     - Infrastructure & Enterprise Architecture
     - Custom Software Design & Development
     - Commercial Software & Systems Integration
-- **Cloud Computing**
-    - Cloud Readiness & Tools Assessment
-    - Cloud Migration & Change Management
-    - SaaS/IaaS/PaaS Implementation
-    - Security, Operations & Management
-- **Management Consulting**
-    - Program & Project Portfolio Management
-    - IT Strategy and Roadmap Design
-    - Regulatory & Compliance Support
-    - Advisory & Consulting Services
 - **Business Support Services**
     - Business Transformation & (Re)Engineering
     - Business & Requirements Analysis
     - Systems Documentation & Training
     - Independent Verification and Validation
+- **Management Consulting**
+    - Program & Project Portfolio Management
+    - IT Strategy and Roadmap Design
+    - Regulatory & Compliance Support
+    - Advisory & Consulting Services
 - **Auxiliary Services**
     - Facilities Management
     - Administrative Support
     - Supply Chain & Logistics
     - Staff Augmentation
 
----
-
 ### Why ITDC?
-- Cost-effective innovative solutions to satisfy complex requirements
-- Solutions delivery teams experienced in various technologies and PM frameworks
+- Cost-effective cloud-native data modernization solutions to satisfy complex federal environmental and regulatory mission requirements
+- Solutions delivery teams experienced in AWS GovCloud, DevSecOps pipelines, enterprise data governance, and federal PM frameworks including agile delivery for FISMA Moderate environments
 - Committed to delivering excellent services and best value outcomes
 - Verifiable track record of exceeding customer expectations
 - 96% D&B Rating; ranked #840 on the 2021 Inc5000 Fastest Growing Companies in the U.S.
 - Highly educated, industry certified SMEs on the leadership team and staff
-
----
 
 ### Certifications
 - SBA 8(a) Certified — expires April 2026
@@ -62,8 +54,6 @@ ITDC has a passion for creating lasting solutions, based on industry best practi
 - Oracle
 - Microsoft
 - Big Data
-
----
 
 ### NAICS Codes
 - 541512: Computer Systems Design Services
@@ -79,10 +69,7 @@ ITDC has a passion for creating lasting solutions, based on industry best practi
 - 238xxx: Specialty Trade Contractors (facilities support family)
 - 561xxx: Administrative and Support Services (facilities support family)
 
----
-
 ### Clients Served (partial list)
-
 ##### U.S. Government
 - U.S. Agency for International Development
 - Defense Health Agency
@@ -102,8 +89,6 @@ ITDC has a passion for creating lasting solutions, based on industry best practi
 - Sterling National Bank
 - American College of Radiology
 
----
-
 ### Partners
 - DTSI — SBA Approved Mentor
 - SAS — Silver Partner
@@ -111,14 +96,10 @@ ITDC has a passion for creating lasting solutions, based on industry best practi
 - Collibra
 - IBM — Registered Business Partner
 
----
-
 ### Contract Vehicles & IDIQs
 - SBA 8(a) Sole-Source (up to $4.5M)
 - GSA MAS Schedule — GS-35F-645GA
 - GSA 8(a) STARS III — 47QTCB21D0358
-
----
 
 ### Company Information
 - **Legal Name:** IT Data Consulting, LLC
@@ -132,12 +113,10 @@ ITDC has a passion for creating lasting solutions, based on industry best practi
 - **DUNS:** 070990867
 - **D&B Open Ratings:** 96%
 
----
-
 ### Contact Information
 - **Benny Asnake**
-    - Role: President & CEO
+    - President & CEO
     - Phone: (202) 999-9184
 - **John Horton**
-    - Role: VP – Federal Solutions
+    - VP – Federal Solutions
     - Phone: (240) 505-7144

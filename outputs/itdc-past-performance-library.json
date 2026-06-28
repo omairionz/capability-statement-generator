@@ -28,33 +28,6 @@
       ]
     },
     {
-      "id": "pp-005",
-      "title": "Defense Health Agency Program Management Support",
-      "client": "Defense Health Agency",
-      "sector": "government",
-      "role": "subcontractor",
-      "prime_contractor": "unspecified large prime",
-      "contract_value": {
-        "amount": 1400000,
-        "currency": "USD",
-        "approximate": true,
-        "represents": "ITDC portion"
-      },
-      "period_of_performance": {
-        "start_year": 2021,
-        "end_year": 2024,
-        "ongoing": false
-      },
-      "description": "Provided program management and acquisition support services to a DHA IT modernization program. Supported IV&V activities and regulatory compliance documentation across multiple workstreams.",
-      "tags": [
-        "program management",
-        "IV&V",
-        "DoD",
-        "healthcare",
-        "compliance"
-      ]
-    },
-    {
       "id": "pp-001",
       "title": "IRS Tax Data Analytics Modernization",
       "client": "Internal Revenue Service",
@@ -133,6 +106,33 @@
         "business analysis",
         "federal civilian",
         "training"
+      ]
+    },
+    {
+      "id": "pp-005",
+      "title": "Defense Health Agency Program Management Support",
+      "client": "Defense Health Agency",
+      "sector": "government",
+      "role": "subcontractor",
+      "prime_contractor": "unspecified large prime",
+      "contract_value": {
+        "amount": 1400000,
+        "currency": "USD",
+        "approximate": true,
+        "represents": "ITDC portion"
+      },
+      "period_of_performance": {
+        "start_year": 2021,
+        "end_year": 2024,
+        "ongoing": false
+      },
+      "description": "Provided program management and acquisition support services to a DHA IT modernization program. Supported IV&V activities and regulatory compliance documentation across multiple workstreams.",
+      "tags": [
+        "program management",
+        "IV&V",
+        "DoD",
+        "healthcare",
+        "compliance"
       ]
     }
   ]
