@@ -78,10 +78,13 @@ def tailor(firm: FirmProfile, library: PastPerformanceLibrary, opportunity_text:
         d_tailoring = None
         
     # ====== 4. Positioning (pos) ===============================================
-    pos_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nPOSITIONING:\n\n{json.dumps(tailored_firm_profile.executive_summary.value_proposition, indent=2)}"
-    pos_tailoring = _call_tailoring_prompt(POSITIONING_PROMPT, pos_user_content, PositioningTailoring)
-    _validate_positioning_tailoring_invariants(pos_tailoring, tailored_firm_profile)
-    tailored_firm_profile = _apply_positioning_rewording(pos_tailoring, tailored_firm_profile)
+    if tailored_firm_profile.executive_summary.value_proposition:
+        pos_user_content = f"OPPORTUNITY TEXT:\n\n{opportunity_text}\n\nPOSITIONING:\n\n{json.dumps(tailored_firm_profile.executive_summary.value_proposition, indent=2)}"
+        pos_tailoring = _call_tailoring_prompt(POSITIONING_PROMPT, pos_user_content, PositioningTailoring)
+        _validate_positioning_tailoring_invariants(pos_tailoring, tailored_firm_profile)
+        tailored_firm_profile = _apply_positioning_rewording(pos_tailoring, tailored_firm_profile)
+    else:
+        pos_tailoring = None
 
     # ++++++++ RETURN STATEMENT ++++++++++
     return tailored_firm_profile, pp_library_final, pp_tailoring, cc_tailoring, d_tailoring, pos_tailoring
@@ -151,7 +154,7 @@ def _apply_past_performance_ordering(tailoring: PastPerformanceTailoring, librar
 
 # _____ 2. Core Capabilities ____________________________________________
 
-def _validate_capabilities_tailoring_invariants(tailoring: CapabilityTailoring, firm: FirmProfile):
+def _validate_capabilities_tailoring_invariants(tailoring: CapabilityTailoring, firm: FirmProfile) -> None:
     """Core capabilities variants check."""
     capability_entries = {entry.area for entry in firm.core_capabilities}
     ordered_capability_areas = tailoring.ordered_capability_areas
@@ -189,7 +192,7 @@ def _apply_capabilities_ordering(tailoring: CapabilityTailoring, firm: FirmProfi
 
 # _____ 3. Differentiators ____________________________________________
 
-def _validate_differentiators_tailoring_invariants(tailoring: DifferentiatorsTailoring, firm: FirmProfile):
+def _validate_differentiators_tailoring_invariants(tailoring: DifferentiatorsTailoring, firm: FirmProfile) -> None:
     differentiators = set(firm.differentiators) if firm.differentiators else set()
     original_differentiators = {entry.original for entry in tailoring.decisions}
 
@@ -241,8 +244,26 @@ def _apply_differentiators_rewording(tailoring: DifferentiatorsTailoring, firm: 
 
 # _____ 4. Positioning ____________________________________________
 
-def _validate_positioning_tailoring_invariants(tailoring: PositioningTailoring, firm: FirmProfile):
-    print("TODO")
+def _validate_positioning_tailoring_invariants(tailoring: PositioningTailoring, firm: FirmProfile) -> None:
+    #NOTE: Positioning has fewer invariants because the output is free response so this isn't entirely necessary. But still a couple worth checking.
+
+    # Invariant 1: Empty string returned
+    if not tailoring.tailored_value_proposition.strip():
+        raise ValueError(
+            "Positioning returned an empty value proposition."
+        )
+    
+    # Invariant 2: Length check - value proposition cannot be too long
+    word_count = len(tailoring.tailored_value_proposition.split())
+    if word_count > 80:
+        raise ValueError(
+            f"⚠️ Warning: Tailored value proposition is {len(tailoring.tailored_value_proposition)} words; Review for accuracy and unnecessary redundancy."
+        )
+    
+    # Invariant 3: Must be different from original value proposition. NOTE: This is optional. Original may already be well-suited 
+    if tailoring.tailored_value_proposition == firm.executive_summary.value_proposition:
+        print("⚠️ Warning: value proposition was unchanged.")
 
 def _apply_positioning_rewording(tailoring: PositioningTailoring, firm: FirmProfile):
-    print("TODO")
+    new_executive_summary = firm.model_copy(update={"value_proposition": tailoring.tailored_value_proposition}, deep=False)
+    return firm.model_copy(update={"executive_summary": new_executive_summary}, deep=True)
