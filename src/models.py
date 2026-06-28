@@ -221,7 +221,7 @@ class CapabilityTailoring(BaseModel):
 class DifferentiatorDecision(BaseModel):
     original: str
     rewritten: str
-    was_changed: bool = False # if False, origional = rewritten
+    was_changed: bool = False # if False, original = rewritten
     rationale: Optional[str] = None
 
 class DifferentiatorsTailoring(BaseModel):
@@ -230,5 +230,4 @@ class DifferentiatorsTailoring(BaseModel):
 
 class PositioningTailoring(BaseModel):
     tailored_value_proposition: str
-    tailored_closing_line: str
     rationale: str
