@@ -18,7 +18,7 @@ import json
 
 # Single point of control — swap firms by changing this one line.
 FIRM_NAME = "itdc"  # {"fedscale", "itdc"}
-OPPORTUNITY = "data/opportunities/army-tactical-network-modernization.txt"
+OPPORTUNITY = "data/opportunities/epa-data-modernization-sources-sought.txt"
 
 firm = load_firm_profile(f"data/firm_profiles/{FIRM_NAME}.yaml")
 pp_path = Path(f"data/past_performance/pp-{FIRM_NAME}.yaml")
@@ -86,21 +86,40 @@ def main() -> None:
     output_path_md.write_text(markdown, encoding="utf-8")
     print()
     print(f"Saved to: {output_path_md}")
+    
+    # Generate the tailored capability statement
+    print()
+    print("=" * 60)
+    print(f"GENERATING TAILORED {FIRM_NAME.upper()} CAPABILITY STATEMENT")
+    print("=" * 60)
+    
+    tailored_firm_profile, tailored_pp_library, pp_tailored_model, cc_tailored_model, d_tailored_model, pos_tailored_model = tailor(firm, pp_library, opportunity_text) # Returns tailored 
 
-    firm_profile, pp_library, pp_tailored_model, cc_tailored_model, d_tailored_model, pos_tailored_model = tailor(firm, pp_library, opportunity_text) # Returns tailored 
+    markdown_tailored = generate_markdown_capability_statement(tailored_firm_profile)
+    print(markdown_tailored)
+
+    output_path_md_tailored = Path(f"outputs/{FIRM_NAME}-tailored.md")
+    output_path_md_tailored.parent.mkdir(parents=True, exist_ok=True)
+    output_path_md_tailored.write_text(markdown_tailored, encoding="utf-8")
+    print()
+    print(f"Saved to: {output_path_md_tailored}")
+
+# ===============================================================
+# =============== INDIVIDUALLY TAILORED SECTIONS ================
+# ===============================================================
 
     # Tailoring Past performance
     print()
     print("=" * 60)
     print(f"GENERATING TAILORED PAST PERFORMANCE")
     print("=" * 60)
-    for entry in pp_library.past_performance:
+    for entry in tailored_pp_library.past_performance:
         tag = "⭐ FEATURED" if entry.id in pp_tailored_model.featured_ids else ""
         print(f"{tag} - {entry.id} - {entry.title}")
 
     output_path_library = Path(f"outputs/{FIRM_NAME}-past-performance-library.json")
     output_path_library.parent.mkdir(parents=True, exist_ok=True)
-    output_path_library.write_text(json.dumps(pp_library.model_dump(), indent=2), encoding="utf-8")
+    output_path_library.write_text(json.dumps(tailored_pp_library.model_dump(), indent=2), encoding="utf-8")
 
     output_path_pp_tailoring = Path(f"outputs/{FIRM_NAME}-past-performance-tailoring.json")
     output_path_pp_tailoring.parent.mkdir(parents=True, exist_ok=True)
@@ -111,7 +130,7 @@ def main() -> None:
     print("=" * 60)
     print(f"GENERATING TAILORED CORE CAPABILITIES")
     print("=" * 60)
-    for entry in firm_profile.core_capabilities:
+    for entry in tailored_firm_profile.core_capabilities:
         print(f"{entry.area}")
         if entry.services:
             for service in entry.services:
@@ -119,7 +138,7 @@ def main() -> None:
     
     output_path_firm_capabilities = Path(f"outputs/{FIRM_NAME}-firm-capabilities.json")
     output_path_firm_capabilities.parent.mkdir(parents=True, exist_ok=True)
-    output_path_firm_capabilities.write_text(json.dumps([c.model_dump() for c in firm_profile.core_capabilities], indent=2), encoding="utf-8")
+    output_path_firm_capabilities.write_text(json.dumps([c.model_dump() for c in tailored_firm_profile.core_capabilities], indent=2), encoding="utf-8")
 
     output_path_cc_tailoring = Path(f"outputs/{FIRM_NAME}-capabilities-tailoring.json")
     output_path_cc_tailoring.parent.mkdir(parents=True, exist_ok=True)
@@ -137,14 +156,33 @@ def main() -> None:
         
         output_path_firm_differentiators = Path(f"outputs/{FIRM_NAME}-firm-differentiators.json")
         output_path_firm_differentiators.parent.mkdir(parents=True, exist_ok=True)
-        output_path_firm_differentiators.write_text(json.dumps([json.dumps(firm_profile.differentiators, indent=2)], indent=2), encoding="utf-8")
-
+        output_path_firm_differentiators.write_text(json.dumps(tailored_firm_profile.differentiators, indent=2), encoding="utf-8")
+        
         output_path_d_tailoring = Path(f"outputs/{FIRM_NAME}-differentiators-tailoring.json")
         output_path_d_tailoring.parent.mkdir(parents=True, exist_ok=True)
         output_path_d_tailoring.write_text(json.dumps(d_tailored_model.model_dump(), indent=2), encoding="utf-8")
-
     else:
         print("No differentiators to tailor for this firm.")
+    
+    # Tailor positioning
+    print()
+    print("=" * 60)
+    print(f"GENERATING TAILORED VALUE PROPOSITION")
+    print("=" * 60)
+    original_firm_value_proposition = firm.executive_summary.value_proposition
+    if pos_tailored_model:
+        tag = "⭐ REWRITTEN" if not original_firm_value_proposition == tailored_firm_profile.executive_summary.value_proposition else ""
+        print(f"{tag} - {tailored_firm_profile.executive_summary.value_proposition}")
+
+        output_path_positioning = Path(f"outputs/{FIRM_NAME}-firm-positioning.json")
+        output_path_positioning.parent.mkdir(parents=True, exist_ok=True)
+        output_path_positioning.write_text(json.dumps(tailored_firm_profile.executive_summary.value_proposition, indent=2), encoding="utf-8")
+
+        output_path_pos_tailoring = Path(f"outputs/{FIRM_NAME}-positioning-tailoring.json")
+        output_path_pos_tailoring.parent.mkdir(parents=True, exist_ok=True)
+        output_path_pos_tailoring.write_text(json.dumps(pos_tailored_model.model_dump(), indent=2), encoding="utf-8")
+    else:
+        print("No value proposition for this firm.")
 
 if __name__ == "__main__":
     main()
