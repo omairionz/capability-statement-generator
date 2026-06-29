@@ -4,7 +4,7 @@ from pathlib import Path
 from weasyprint import HTML
 from src.models import FirmProfile
 
-TEMPLATE_PATH = Path("prompts/templates/capability-statement.html")
+TEMPLATE_PATH = Path("prompts/templates/capability_statement.html")
 OUTPUT_PATH = Path("outputs")
 
 def build_pdf(firm: FirmProfile, output_path: Path, save_preview: bool = True) -> None:
@@ -20,15 +20,16 @@ def build_pdf(firm: FirmProfile, output_path: Path, save_preview: bool = True) -
 def _render_html(firm: FirmProfile):
     template = TEMPLATE_PATH.read_text(encoding="utf-8")
 
+    executive_summary_html = _render_executive_summary(firm)
     capabilities_html = _render_capabilities(firm)
+    differentiators_html = _render_differentiators(firm)
     certifications_html = _render_certifications(firm)
     naics_html = _render_naics(firm)
     clients_html = _render_clients(firm)
-    differentiators_html = _render_differentiators(firm)
-    contacts_html = _render_contacts(firm)
     partners_html = _render_partners(firm)
     vehicles_html = _render_vehicles(firm)
-    executive_summary_html = _render_executive_summary(firm)
+    contacts_html = _render_contacts(firm)
+    id_codes_html = _render_id_codes(firm)
 
     hq = firm.company_identity.headquarters
     address = f"{hq.street}, {hq.city}, {hq.state} {hq.zip}"
@@ -38,21 +39,42 @@ def _render_html(firm: FirmProfile):
     html = html.replace("{{ email }}", firm.company_identity.general_email or "")
     html = html.replace("{{ phone }}", firm.company_identity.general_phone or "")
     html = html.replace("{{ founded }}", str(firm.company_identity.founded) if firm.company_identity.founded else "")
+
     html = html.replace("{{ firm_type }}", firm.company_identity.firm_type or "")
+    html = html.replace("{{ legal_name }}", firm.company_identity.legal_name or "")
     html = html.replace("{{ display_name }}", firm.company_identity.display_name)
     html = html.replace("{{ tagline }}", firm.company_identity.tagline or "")
-    html = html.replace("{{ primary_color }}", firm.brand_assets.primary_color or "#1F3864")
-    html = html.replace("{{ accent_color }}", firm.brand_assets.accent_color or "#ED7D31")
+    html = html.replace("{{ primary_color }}", firm.brand_assets.primary_color)
+    html = html.replace("{{ accent_color }}", firm.brand_assets.accent_color)
+    html = html.replace("{{ id_codes }}", id_codes_html)
+
     html = html.replace("{{ executive_summary }}", executive_summary_html)
     html = html.replace("{{ capabilities }}", capabilities_html)
+    html = html.replace("{{ differentiators }}", differentiators_html)
     html = html.replace("{{ certifications }}", certifications_html)
     html = html.replace("{{ naics }}", naics_html)
     html = html.replace("{{ clients }}", clients_html)
-    html = html.replace("{{ differentiators }}", differentiators_html)
-    html = html.replace("{{ contacts }}", contacts_html)
     html = html.replace("{{ partners }}", partners_html)
     html = html.replace("{{ vehicles }}", vehicles_html)
+    html = html.replace("{{ contacts }}", contacts_html)
 
+    return html
+
+# ==================================================================
+# ====================== SUB HELPER METHODS ========================
+# ==================================================================
+
+def _render_id_codes(firm: FirmProfile) -> str:
+    ids = firm.identifiers
+    html = ""
+    if ids.cage:
+        html += f'<div><span class="label">CAGE:</span> {ids.cage}</div>'
+    if ids.duns:
+        html += f'<div><span class="label">DUNS:</span> {ids.duns}</div>'
+    if ids.uei:
+        html += f'<div><span class="label">UEI:</span> {ids.uei}</div>'
+    if ids.dnb_open_ratings:
+        html += f'<div><span class="label">D&B Rating:</span> {ids.dnb_open_ratings}</div>'
     return html
 
 def _render_executive_summary(firm: FirmProfile) -> str:

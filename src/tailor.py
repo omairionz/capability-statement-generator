@@ -265,5 +265,7 @@ def _validate_positioning_tailoring_invariants(tailoring: PositioningTailoring, 
         print("⚠️ Warning: value proposition was unchanged.")
 
 def _apply_positioning_rewording(tailoring: PositioningTailoring, firm: FirmProfile):
-    new_executive_summary = firm.model_copy(update={"value_proposition": tailoring.tailored_value_proposition}, deep=False)
+    new_executive_summary = firm.executive_summary.model_copy(
+        update={"value_proposition": tailoring.tailored_value_proposition}
+    )
     return firm.model_copy(update={"executive_summary": new_executive_summary}, deep=True)
