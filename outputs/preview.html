@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --primary: #1F3864;
+    --accent: #ED7D31;
+  }
+
+  @page {
+    size: Letter;
+    margin: 0.4in;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 7.8pt;
+    line-height: 1.25;
+    color: #222;
+    margin: 0;
+  }
+
+  /* ---------- HEADER ---------- */
+  .header {
+    border-bottom: 3px solid var(--primary);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  .company-name {
+    font-size: 26pt;
+    font-weight: 800;
+    color: var(--primary);
+    letter-spacing: -0.5px;
+    line-height: 1;
+  }
+  .tagline {
+    font-size: 9pt;
+    color: var(--accent);
+    font-weight: 600;
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+  .doc-title {
+    font-size: 13pt;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 6px;
+  }
+
+  /* ---------- TWO COLUMN LAYOUT ---------- */
+  .columns {
+    display: table;
+    width: 100%;
+    border-spacing: 0;
+  }
+  .left-col {
+    display: table-cell;
+    width: 56%;
+    vertical-align: top;
+    padding-right: 14px;
+  }
+  .right-col {
+    display: table-cell;
+    width: 44%;
+    vertical-align: top;
+  }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-header {
+    background: var(--primary);
+    color: white;
+    font-size: 9.5pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 3px 7px;
+    margin: 7px 0 4px 0;
+  }
+  .right-col .section-header {
+    background: var(--accent);
+  }
+
+  /* ---------- CAPABILITY AREAS ---------- */
+  .capability-area {
+    font-weight: 700;
+    color: var(--primary);
+    font-size: 8.8pt;
+    margin-top: 5px;
+  }
+
+  /* ---------- LISTS ---------- */
+  ul {
+    margin: 3px 0 6px 0;
+    padding-left: 16px;
+  }
+  li {
+    margin-bottom: 1.5px;
+  }
+  ul ul {
+    margin: 1px 0 2px 0;
+  }
+
+  p {
+    margin: 0 0 6px 0;
+  }
+
+  h4 {
+    font-size: 8.5pt;
+    color: var(--primary);
+    margin: 6px 0 2px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ---------- IDENTIFIERS BLOCK ---------- */
+  .identifiers {
+    font-size: 8pt;
+  }
+  .identifiers div {
+    margin-bottom: 2px;
+  }
+  .identifiers .label {
+    font-weight: 700;
+    color: var(--primary);
+  }
+
+  /* ---------- CLIENTS (full width bottom) ---------- */
+  .clients-section {
+    margin-top: 12px;
+  }
+  .clients-columns {
+    display: table;
+    width: 100%;
+    border-spacing: 0;
+  }
+  .clients-columns > div {
+    display: table-cell;
+    width: 50%;
+    vertical-align: top;
+    padding-right: 14px;
+  }
+
+  /* ---------- FOOTER ---------- */
+  .footer {
+    border-top: 2px solid var(--primary);
+    margin-top: 12px;
+    padding-top: 6px;
+    font-size: 8pt;
+    color: var(--primary);
+    text-align: center;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="company-name">ITDC</div>
+    <div class="tagline">Integrity | Innovation | Excellence</div>
+    <div class="doc-title">Capability Statement</div>
+  </div>
+
+  <!-- TWO COLUMNS -->
+  <div class="columns">
+
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+      <div class="section-header">Executive Summary</div>
+      <p>ITDC is an SBA Certified 8(a) Management Consulting firm, dedicated to the success and sustainability of our customers and their missions Since 2010, we have been providing cost-effective, scalable, and task-specific enterprise business and technology solutions Our combination of deep cloud-native modernization expertise, hands-on AWS GovCloud and FISMA Moderate experience, federal data governance and environmental mission support capabilities, and lean delivery practices ensure that we deliver best-value, compliance-ready solutions to EPA and the broader federal civilian community.</p><p>ITDC has a passion for creating lasting solutions, based on industry best practices, proven engineering methods, and effective technical approaches, that deliver a high return on investment and quality services We value our relationships with our customers and partners, and always strive to innovate and provide excellent services that exceed expectations</p>
+
+      <div class="section-header">Core Capabilities</div>
+      <div class='capability-area'>Cloud Computing</div><ul><li>Cloud Readiness & Tools Assessment</li><li>Cloud Migration & Change Management</li><li>SaaS/IaaS/PaaS Implementation</li><li>Security, Operations & Management</li></ul><div class='capability-area'>Data & Analytics</div><ul><li>Advanced Data Analytics</li><li>Enterprise Data Architecture and Governance</li><li>Relational Database Design & Development</li></ul><div class='capability-area'>IT & Engineering Services</div><ul><li>Agile & DevSecOps Adoption/Support</li><li>Infrastructure & Enterprise Architecture</li><li>Custom Software Design & Development</li><li>Commercial Software & Systems Integration</li></ul><div class='capability-area'>Business Support Services</div><ul><li>Business Transformation & (Re)Engineering</li><li>Business & Requirements Analysis</li><li>Systems Documentation & Training</li><li>Independent Verification and Validation</li></ul><div class='capability-area'>Management Consulting</div><ul><li>Program & Project Portfolio Management</li><li>IT Strategy and Roadmap Design</li><li>Regulatory & Compliance Support</li><li>Advisory & Consulting Services</li></ul><div class='capability-area'>Auxiliary Services</div><ul><li>Facilities Management</li><li>Administrative Support</li><li>Supply Chain & Logistics</li><li>Staff Augmentation</li></ul>
+
+      <div class="section-header">Why ITDC?</div>
+      <ul><li>Cost-effective, cloud-native AWS GovCloud solutions to satisfy complex federal data platform modernization and analytics requirements</li><li>Solutions delivery teams experienced in DevSecOps pipelines, enterprise data governance, and FISMA Moderate compliance frameworks supporting federal civilian missions</li><li>Committed to delivering excellent services and best value outcomes</li><li>Verifiable track record of exceeding customer expectations</li><li>96% D&B Rating; ranked #840 on the 2021 Inc5000 Fastest Growing Companies in the U.S.</li><li>Highly educated, industry certified SMEs on the leadership team and staff</li></ul>
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+      <div class="section-header">Company Information</div>
+      <div class="identifiers">
+        <div><span class="label">Legal Name:</span> IT Data Consulting, LLC</div>
+        <div><span class="label">Founded:</span> 2010</div>
+        <div><span class="label">Type:</span> SBA Certified 8(a) Management Consulting firm</div>
+        <div><span class="label">Location:</span> 12020 Sunrise Valley Drive, Suite 100, Reston, VA 20191</div>
+        <div><span class="label">Email:</span> info@it-dc.com</div>
+        <div><span class="label">Phone:</span> (571) 303-1803</div>
+        <div><span class="label">CAGE:</span> 7J6G9</div><div><span class="label">DUNS:</span> 070990867</div><div><span class="label">D&B Rating:</span> 96%</div>
+      </div>
+
+      <div class="section-header">Contact Information</div>
+      <ul><li><strong>Benny Asnake</strong> — President & CEO<br>(202) 999-9184</li><li><strong>John Horton</strong> — VP – Federal Solutions<br>(240) 505-7144</li></ul>
+
+      <div class="section-header">Certifications</div>
+      <ul><li><strong>SBA 8(a) Certified</strong> — expires 2026-04</li><li><strong>Maryland DOT MBE/DBE Certified</strong></li><li><strong>GSA Contract Holder</strong></li><li>PMP</li><li>Agile</li><li>Scrum</li><li>AWS</li><li>CISSP</li><li>Oracle</li><li>Microsoft</li><li>Big Data</li></ul>
+
+      <div class="section-header">NAICS Codes</div>
+      <ul><li>541512: Computer Systems Design Services</li><li>541511: Custom Computer Programming Services</li><li>518210: Data Processing, Hosting, and Related Services</li><li>541513: Computer Facilities Management Services</li><li>541611: Administrative Management and General Management Consulting Services</li><li>541618: Other Management Consulting Services</li><li>541990: All Other Professional, Scientific and Technical Services</li><li>541519: Other Computer Related Services</li><li>519190: All Other Information Services</li><li>236xxx: Construction of Buildings (facilities support family)</li><li>238xxx: Specialty Trade Contractors (facilities support family)</li><li>561xxx: Administrative and Support Services (facilities support family)</li></ul>
+
+      <div class="section-header">Contract Vehicles</div>
+      <ul><li>SBA 8(a) Sole-Source (up to $4.5M)</li><li>GSA MAS Schedule — GS-35F-645GA</li><li>GSA 8(a) STARS III — 47QTCB21D0358</li></ul>
+
+      <div class="section-header">Partners</div>
+      <ul><li>DTSI — SBA Approved Mentor</li><li>SAS — Silver Partner</li><li>Amazon Web Services — AWS Partner Network</li><li>Collibra</li><li>IBM — Registered Business Partner</li></ul>
+    </div>
+  </div>
+
+  <!-- CLIENTS (FULL WIDTH) -->
+  <div class="clients-section">
+    <div class="section-header">Clients Served</div>
+    <h4>U.S. Government <em>(partial list)</em></h4><ul><li>U.S. Agency for International Development</li><li>Defense Health Agency</li><li>Environmental Protection Agency</li><li>Housing and Urban Development</li><li>Internal Revenue Service</li><li>National Institutes of Health</li></ul><h4>Commercial</h4><ul><li>College Board</li><li>Fiserv</li><li>Genpact</li><li>Graydon</li><li>MedAssets Inc.</li><li>MPG Logistics</li><li>MUFG Union Bank</li><li>Sterling National Bank</li><li>American College of Radiology</li></ul>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    12020 Sunrise Valley Drive, Suite 100, Reston, VA 20191 &nbsp;|&nbsp; info@it-dc.com &nbsp;|&nbsp; (571) 303-1803
+  </div>
+
+</body>
+</html>
