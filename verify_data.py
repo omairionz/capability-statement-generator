@@ -7,6 +7,9 @@ Change FIRM_NAME below to test against a different firm profile.
 
 from pathlib import Path
 
+import os
+os.environ["G_MESSAGES_DEBUG"] = "none"
+
 from src.loaders import (
     load_firm_profile,
     load_past_performance,
@@ -14,6 +17,7 @@ from src.loaders import (
 )
 from src.generator import generate_markdown_capability_statement
 from src.tailor import tailor
+from src.pdf_builder import build_pdf
 import json
 
 # Single point of control — swap firms by changing this one line.
@@ -73,6 +77,10 @@ def main() -> None:
     print(f"Length: {len(opportunity_text)} characters")
     print(f"Preview: {opportunity_text[:200]}...")
 
+# ===============================================================
+# =============== MARKDOWN CAPABILITY STATEMENTS ================
+# ===============================================================
+
     # Generate the capability statement
     print()
     print("=" * 60)
@@ -103,6 +111,17 @@ def main() -> None:
     output_path_md_tailored.write_text(markdown_tailored, encoding="utf-8")
     print()
     print(f"Saved to: {output_path_md_tailored}")
+
+# ===============================================================
+# ====================== PDF GENERATION =========================
+# ===============================================================
+    print()
+    print("=" * 60)
+    print(f"GENERATING {FIRM_NAME.upper()} PDF CAPABILITY STATEMENT")
+    print("=" * 60)
+    output_path_pdf = Path(f"outputs/{FIRM_NAME}.pdf")
+    output_path_pdf.parent.mkdir(parents=True, exist_ok=True)
+    build_pdf(tailored_firm_profile, output_path_pdf, save_preview=True)
 
 # ===============================================================
 # =============== INDIVIDUALLY TAILORED SECTIONS ================
