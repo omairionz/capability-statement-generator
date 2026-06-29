@@ -1,5 +1,7 @@
 # pdf_builder.py
 
+import os
+os.environ["G_MESSAGES_DEBUG"] = "none"
 from pathlib import Path
 from weasyprint import HTML
 from src.models import FirmProfile
@@ -28,96 +30,113 @@ def _render_html(firm: FirmProfile):
     clients_html = _render_clients(firm)
     partners_html = _render_partners(firm)
     vehicles_html = _render_vehicles(firm)
-    contacts_html = _render_contacts(firm)
+    header_contact_html = _render_header_contact(firm)
     id_codes_html = _render_id_codes(firm)
 
     hq = firm.company_identity.headquarters
     address = f"{hq.street}, {hq.city}, {hq.state} {hq.zip}"
 
-    html = template
-    html = html.replace("{{ address }}", address)
-    html = html.replace("{{ email }}", firm.company_identity.general_email or "")
-    html = html.replace("{{ phone }}", firm.company_identity.general_phone or "")
-    html = html.replace("{{ founded }}", str(firm.company_identity.founded) if firm.company_identity.founded else "")
+    company_info = (
+        f'<div class="identifiers">'
+        f'<div><span class="label">Location:</span> {address}</div>'
+        f'<div><span class="label">Email:</span> {firm.company_identity.general_email or ""}</div>'
+        f'<div><span class="label">Phone:</span> {firm.company_identity.general_phone or ""}</div>'
+        f'{id_codes_html}'
+        f'</div>'
+    )
 
-    html = html.replace("{{ firm_type }}", firm.company_identity.firm_type or "")
-    html = html.replace("{{ legal_name }}", firm.company_identity.legal_name or "")
-    html = html.replace("{{ display_name }}", firm.company_identity.display_name)
+    display = firm.company_identity.display_name
+    left_col = (
+        _section("Executive Summary", executive_summary_html)
+        + _section("Core Capabilities", capabilities_html)
+        + _section(f"Why {display}?", differentiators_html)
+    )
+    right_col = (
+        _section("Company Information", company_info, accent=True)
+        + _section("Certifications", certifications_html, accent=True)
+        + _section("NAICS Codes", naics_html, accent=True)
+        + _section("Contract Vehicles", vehicles_html, accent=True)
+        + _section("Partners", partners_html, accent=True)
+    )
+    clients_title = "Clients Served"
+    if firm.clients_served.partial_list:
+        clients_title += " (Partial List)"
+    clients_block = _section(clients_title, clients_html)
+
+    html = template
+    html = html.replace("{{ display_name }}", display)
     html = html.replace("{{ tagline }}", firm.company_identity.tagline or "")
     html = html.replace("{{ primary_color }}", firm.brand_assets.primary_color)
     html = html.replace("{{ accent_color }}", firm.brand_assets.accent_color)
-    html = html.replace("{{ id_codes }}", id_codes_html)
+    html = html.replace("{{ header_contact }}", header_contact_html)
+    html = html.replace("{{ left_col }}", left_col)
+    html = html.replace("{{ right_col }}", right_col)
+    html = html.replace("{{ clients_block }}", clients_block)
+    html = html.replace("{{ address }}", address)
+    html = html.replace("{{ email }}", firm.company_identity.general_email or "")
+    html = html.replace("{{ phone }}", firm.company_identity.general_phone or "")
 
-    html = html.replace("{{ executive_summary }}", executive_summary_html)
-    html = html.replace("{{ capabilities }}", capabilities_html)
-    html = html.replace("{{ differentiators }}", differentiators_html)
-    html = html.replace("{{ certifications }}", certifications_html)
-    html = html.replace("{{ naics }}", naics_html)
-    html = html.replace("{{ clients }}", clients_html)
-    html = html.replace("{{ partners }}", partners_html)
-    html = html.replace("{{ vehicles }}", vehicles_html)
-    html = html.replace("{{ contacts }}", contacts_html)
-
-    return html
-
-# ==================================================================
-# ====================== SUB HELPER METHODS ========================
-# ==================================================================
-
-def _render_id_codes(firm: FirmProfile) -> str:
-    ids = firm.identifiers
-    html = ""
-    if ids.cage:
-        html += f'<div><span class="label">CAGE:</span> {ids.cage}</div>'
-    if ids.duns:
-        html += f'<div><span class="label">DUNS:</span> {ids.duns}</div>'
-    if ids.uei:
-        html += f'<div><span class="label">UEI:</span> {ids.uei}</div>'
-    if ids.dnb_open_ratings:
-        html += f'<div><span class="label">D&B Rating:</span> {ids.dnb_open_ratings}</div>'
     return html
 
 def _render_executive_summary(firm: FirmProfile) -> str:
     es = firm.executive_summary
     parts = []
-    
-    # First paragraph: identity fields
     first_para = " ".join(filter(None, [
-        f"{firm.company_identity.display_name} is {es.who_they_are}," if es.who_they_are else "",
+        f"{firm.company_identity.legal_name} is {es.who_they_are}," if es.who_they_are else "",
         es.mission_commitment or "",
         es.positioning_statement or "",
         es.value_proposition or "",
     ]))
     if first_para.strip():
         parts.append(f"<p>{first_para}</p>")
-    
-    # Second paragraph: passion + closing
     second_para = " ".join(filter(None, [
         es.voice_passion or "",
         es.closing_line or "",
     ]))
     if second_para.strip():
         parts.append(f"<p>{second_para}</p>")
-    
     for para in es.additional_paragraphs:
         parts.append(f"<p>{para}</p>")
-    
     return "".join(parts)
 
 def _render_capabilities(firm: FirmProfile) -> str:
-    html = ""
+    # If NO capability area has services (e.g. FedScale), render a simple bulleted list.
+    any_services = any(cap.services for cap in firm.core_capabilities)
+    if not any_services:
+        items = "".join(f"<li>{cap.area}</li>" for cap in firm.core_capabilities)
+        return f"<ul class='cap-bullets'>{items}</ul>"
+
+    # Otherwise, render boxed cards two-per-row.
+    has_any_services = any(cap.services for cap in firm.core_capabilities)
+    cells = []
     for cap in firm.core_capabilities:
-        html += f"<div class='capability-area'>{cap.area}</div>"
-        if cap.services:
-            html += "<ul>"
-            for service in cap.services:
-                html += f"<li>{service}</li>"
-            html += "</ul>"
+        if has_any_services:
+            inner = f"<div class='capability-area'>{cap.area}</div>"
+            if cap.services:
+                inner += "<ul>"
+                for service in cap.services:
+                    inner += f"<li>{service}</li>"
+                inner += "</ul>"
+            cells.append(f"<div class='cap-card'>{inner}</div>")
+        else:
+            # No firm has services -> render areas as a simple bulleted card
+            cells.append(f"<div class='cap-card cap-card-flat'><div class='capability-area'>&bull; {cap.area}</div></div>")
+
+    html = "<div class='cap-grid'>"
+    for i in range(0, len(cells), 2):
+        html += "<div class='cap-row'>"
+        html += f"<div class='cap-cell'>{cells[i]}</div>"
+        if i + 1 < len(cells):
+            html += f"<div class='cap-cell'>{cells[i+1]}</div>"
+        else:
+            html += "<div class='cap-cell'></div>"
+        html += "</div>"
+    html += "</div>"
     return html
 
 def _render_differentiators(firm: FirmProfile) -> str:
     if not firm.differentiators:
-        return ""  # FedScale — nothing to render
+        return ""
     html = "<ul>"
     for d in firm.differentiators:
         html += f"<li>{d}</li>"
@@ -142,35 +161,48 @@ def _render_certifications(firm: FirmProfile) -> str:
 def _render_naics(firm: FirmProfile) -> str:
     if not firm.naics_codes.codes:
         return ""
-    html = "<ul>"
     regular = [c for c in firm.naics_codes.codes if not c.wildcard]
     wildcards = [c for c in firm.naics_codes.codes if c.wildcard]
-    for code in regular + wildcards:
-        if firm.naics_codes.show_description:
-            html += f"<li>{code.code}: {code.description}</li>"
-        else:
-            html += f"<li>{code.code}</li>"
+    ordered = regular + wildcards
+
+    # When descriptions are hidden, render as a compact comma-separated block
+    # instead of a tall single-column list.
+    if not firm.naics_codes.show_description:
+        codes = ", ".join(c.code for c in ordered)
+        return f'<div class="naics-inline">{codes}</div>'
+
+    html = "<ul>"
+    for code in ordered:
+        html += f"<li>{code.code}: {code.description}</li>"
     html += "</ul>"
     return html
+
+def _client_list_html(clients: list) -> str:
+    # If many clients, split into two side-by-side sub-columns to save vertical space.
+    if len(clients) > 8:
+        mid = (len(clients) + 1) // 2
+        left = "".join(f"<li>{c}</li>" for c in clients[:mid])
+        right = "".join(f"<li>{c}</li>" for c in clients[mid:])
+        return (
+            '<div class="client-split">'
+            f'<ul>{left}</ul><ul>{right}</ul>'
+            '</div>'
+        )
+    return "<ul>" + "".join(f"<li>{c}</li>" for c in clients) + "</ul>"
 
 def _render_clients(firm: FirmProfile) -> str:
     cs = firm.clients_served
     html = ""
-    partial = " <em>(partial list)</em>" if cs.partial_list else ""
-    if cs.intro_text:
-        html += f"<p><em>{cs.intro_text}</em></p>"
+    # Both narrative lines together, above the lists.
+    narrative = " ".join(filter(None, [cs.intro_text or "", cs.validation_text or ""]))
+    if narrative.strip():
+        html += f"<p class='clients-narrative'><em>{narrative}</em></p>"
+    html += '<div class="clients-columns">'
     if cs.government:
-        html += f"<h4>U.S. Government{partial}</h4><ul>"
-        for client in cs.government:
-            html += f"<li>{client}</li>"
-        html += "</ul>"
+        html += f'<div><div class="client-head">U.S. Government</div><div class="client-box">{_client_list_html(cs.government)}</div></div>'
     if cs.commercial:
-        html += "<h4>Commercial</h4><ul>"
-        for client in cs.commercial:
-            html += f"<li>{client}</li>"
-        html += "</ul>"
-    if cs.validation_text:
-        html += f"<p><em>{cs.validation_text}</em></p>"
+        html += f'<div><div class="client-head">Commercial</div><div class="client-box">{_client_list_html(cs.commercial)}</div></div>'
+    html += "</div>"
     return html
 
 def _render_partners(firm: FirmProfile) -> str:
@@ -199,16 +231,41 @@ def _render_vehicles(firm: FirmProfile) -> str:
     html += "</ul>"
     return html
 
-def _render_contacts(firm: FirmProfile) -> str:
+def _section(title: str, content: str, accent: bool = False) -> str:
+    """Wrap content in a section with a header. Returns empty string if content is empty,
+    which suppresses the header for sections a firm doesn't have."""
+    if not content or not content.strip():
+        return ""
+    cls = "section-header accent" if accent else "section-header"
+    return f'<div class="{cls}">{title}</div>{content}'
+
+
+def _render_header_contact(firm: FirmProfile) -> str:
     if not firm.contacts:
         return ""
-    html = "<ul>"
+    html = ""
     for contact in firm.contacts:
-        html += f"<li><strong>{contact.name}</strong> — {contact.title}"
+        html += f'<div class="hc-name">{contact.name}</div>'
+        html += f'<div class="hc-title">{contact.title}</div>'
         if contact.phone:
-            html += f"<br>{contact.phone}"
+            html += f'<div class="hc-line">{contact.phone}</div>'
         if contact.email:
-            html += f"<br>{contact.email}"
-        html += "</li>"
-    html += "</ul>"
+            html += f'<div class="hc-line">{contact.email}</div>'
     return html
+
+def _render_id_codes(firm: FirmProfile) -> str:
+    ids = firm.identifiers
+    html = ""
+    if ids.cage:
+        html += f'<div><span class="label">CAGE:</span> {ids.cage}</div>'
+    if ids.duns:
+        html += f'<div><span class="label">DUNS:</span> {ids.duns}</div>'
+    if ids.uei:
+        html += f'<div><span class="label">UEI:</span> {ids.uei}</div>'
+    if ids.dnb_open_ratings:
+        html += f'<div><span class="label">D&B Rating:</span> {ids.dnb_open_ratings}</div>'
+    return html
+
+
+
+
